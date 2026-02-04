@@ -1,20 +1,4 @@
 {
-  "apps": [
-    {
-      "name": "",
-      "command": "",
-      "cwd": "",
-      "restart_delay": 0,
-      "pid": 0,
-      "status": ""
-    },
-    {
-      "name": "SpringDemo",
-      "command": "java -jar demo-0.0.1-SNAPSHOT.jar",
-      "cwd": "/home/caleb-kibet/vscode/go-tools/JarRun",
-      "restart_delay": 5,
-      "pid": 99410,
-      "status": "running"
-    }
+  "apps": [ 
   ]
 }
