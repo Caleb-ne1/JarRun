@@ -124,3 +124,44 @@
 2026-02-04T10:12:38.008+03:00  INFO 61176 --- [demo] [           main] com.example.demo.DemoAppMain             : Started DemoAppMain in 1.967 seconds (process running for 2.614)
 2026-02-04T10:21:28.784+03:00  INFO 61176 --- [demo] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
 2026-02-04T10:21:28.789+03:00  INFO 61176 --- [demo] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.2)
+
+2026-02-04T10:43:41.443+03:00  INFO 84782 --- [demo] [           main] com.example.demo.DemoAppMain             : Starting DemoAppMain v0.0.1-SNAPSHOT using Java 24.0.2 with PID 84782 (/home/caleb-kibet/vscode/go-tools/JarRun/demo-0.0.1-SNAPSHOT.jar started by caleb-kibet in /home/caleb-kibet/vscode/go-tools/JarRun)
+2026-02-04T10:43:41.450+03:00  INFO 84782 --- [demo] [           main] com.example.demo.DemoAppMain             : No active profile set, falling back to 1 default profile: "default"
+2026-02-04T10:43:42.442+03:00  INFO 84782 --- [demo] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-02-04T10:43:42.464+03:00  INFO 84782 --- [demo] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-04T10:43:42.465+03:00  INFO 84782 --- [demo] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-04T10:43:42.502+03:00  INFO 84782 --- [demo] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 976 ms
+2026-02-04T10:43:42.979+03:00  INFO 84782 --- [demo] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-02-04T10:43:42.991+03:00  INFO 84782 --- [demo] [           main] com.example.demo.DemoAppMain             : Started DemoAppMain in 2.016 seconds (process running for 2.642)
+2026-02-04T10:59:04.169+03:00  INFO 84782 --- [demo] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-04T10:59:04.170+03:00  INFO 84782 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-04T10:59:04.171+03:00  INFO 84782 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-02-04T10:59:25.198+03:00  INFO 84782 --- [demo] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-04T10:59:25.203+03:00  INFO 84782 --- [demo] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.2)
+
+2026-02-04T11:03:30.225+03:00  INFO 99411 --- [demo] [           main] com.example.demo.DemoAppMain             : Starting DemoAppMain v0.0.1-SNAPSHOT using Java 24.0.2 with PID 99411 (/home/caleb-kibet/vscode/go-tools/JarRun/demo-0.0.1-SNAPSHOT.jar started by caleb-kibet in /home/caleb-kibet/vscode/go-tools/JarRun)
+2026-02-04T11:03:30.231+03:00  INFO 99411 --- [demo] [           main] com.example.demo.DemoAppMain             : No active profile set, falling back to 1 default profile: "default"
+2026-02-04T11:03:31.220+03:00  INFO 99411 --- [demo] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-02-04T11:03:31.238+03:00  INFO 99411 --- [demo] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-04T11:03:31.239+03:00  INFO 99411 --- [demo] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-04T11:03:31.264+03:00  INFO 99411 --- [demo] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 972 ms
+2026-02-04T11:03:31.693+03:00  INFO 99411 --- [demo] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-02-04T11:03:31.705+03:00  INFO 99411 --- [demo] [           main] com.example.demo.DemoAppMain             : Started DemoAppMain in 1.947 seconds (process running for 2.436)

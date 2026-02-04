@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"syscall"
 	"time"
@@ -94,9 +95,9 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 
 // stopProcess stops the given app by PID
 func StopProcess(appName string, apps []config.AppConfig) error {
+	// find app
 	var app config.AppConfig
 	found := false
-
 	for _, a := range apps {
 		if a.Name == appName {
 			app = a
@@ -111,87 +112,70 @@ func StopProcess(appName string, apps []config.AppConfig) error {
 
 	if app.Status != "running" || app.PID == 0 {
 		fmt.Printf("App '%s' is not running\n", appName)
+		app.PID = 0
+		app.Status = "stopped"
+		apps = updateApp(apps, app)
+		_ = config.SaveConfig("configs/apps.json", apps)
 		return nil
 	}
 
 	fmt.Printf("Stopping app '%s' (PID %d)...\n", appName, app.PID)
 
-	// Send SIGTERM to process group
-	err := syscall.Kill(-app.PID, syscall.SIGTERM)
-	if err != nil && err.Error() != "no such process" {
-		fmt.Println("Failed to send SIGTERM:", err)
-	}
-
-	// Wait up to 3 seconds for graceful shutdown
-	timeout := 3 * time.Second
-	ticker := time.NewTicker(300 * time.Millisecond)
-	defer ticker.Stop()
-
-	expire := time.After(timeout)
-
-loop:
-	for {
-		select {
-		case <-expire:
-			break loop
-		case <-ticker.C:
-			// Check if process still exists
-			err := syscall.Kill(-app.PID, syscall.Signal(0))
-			if err != nil {
-				// Process is gone
-				break loop
-			}
+	// cross-platform process kill
+	if runtime.GOOS == "windows" {
+		cmd := exec.Command("taskkill", "/PID", fmt.Sprint(app.PID), "/T", "/F")
+		if err := cmd.Run(); err != nil {
+			fmt.Println("Failed to stop process tree:", err)
 		}
+	} else {
+		_ = syscall.Kill(-app.PID, syscall.SIGTERM)
+		time.Sleep(1 * time.Second)
+		_ = syscall.Kill(-app.PID, syscall.SIGKILL)
 	}
 
-	// Force kill if still alive
-	err = syscall.Kill(-app.PID, syscall.SIGKILL)
-	if err != nil && err.Error() != "no such process" {
-		fmt.Println("Failed to send SIGKILL:", err)
-	}
+	// small wait to ensure process is gone
+	time.Sleep(500 * time.Millisecond)
 
-	// Update config
+	// update config
 	app.PID = 0
 	app.Status = "stopped"
 	apps = updateApp(apps, app)
-	err = config.SaveConfig("configs/apps.json", apps)
+	err := config.SaveConfig("configs/apps.json", apps)
 	if err != nil {
 		return fmt.Errorf("failed to update config: %v", err)
 	}
 
 	fmt.Printf("App '%s' stopped successfully\n", appName)
-
 	return nil
 }
 
-
 // restartProcess restarts the given app
 func RestartProcess(appName string, apps []config.AppConfig) error {
-    fmt.Printf("Restarting app '%s'...\n", appName)
+	fmt.Printf("Restarting app '%s'...\n", appName)
 
-    // Stop first
-    err := StopProcess(appName, apps)
-    if err != nil {
-        return fmt.Errorf("failed to stop app: %v", err)
-    }
+	// Stop first
+	err := StopProcess(appName, apps)
+	if err != nil {
+		return fmt.Errorf("failed to stop app: %v", err)
+	}
 
-    // Small delay to ensure port release etc
-    time.Sleep(1 * time.Second)
+	// Small delay to ensure port release etc
+	time.Sleep(1 * time.Second)
 
-    // Reload config to get updated state
-    updatedApps, err := config.LoadConfig("configs/apps.json")
-    if err != nil {
-        return fmt.Errorf("failed to reload config: %v", err)
-    }
+	// Reload config to get updated state
+	updatedApps, err := config.LoadConfig("configs/apps.json")
+	if err != nil {
+		return fmt.Errorf("failed to reload config: %v", err)
+	}
 
-    // Start again
-    err = StartProcess(appName, updatedApps)
-    if err != nil {
-        return fmt.Errorf("failed to start app: %v", err)
-    }
+	// Start again
+	err = StartProcess(appName, updatedApps)
+	if err != nil {
+		return fmt.Errorf("failed to start app: %v", err)
+	}
 
-    fmt.Printf("App '%s' restarted successfully\n", appName)
-    return nil
+	fmt.Printf("App '%s' restarted successfully\n", appName)
+	return nil
 }
 
 // appStatus checks the status of the given app
