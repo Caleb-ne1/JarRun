@@ -60,7 +60,7 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 	}
 
 	// prepare command
-	cmd := exec.Command("/bin/sh", "-c", app.Command)
+	cmd := exec.Command("/usr/bin/env", "sh", "-c", app.Command)
 	cmd.Dir = app.Cwd
 
 	// Redirect output to log file
