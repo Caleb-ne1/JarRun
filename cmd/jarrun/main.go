@@ -106,6 +106,8 @@ func main() {
             fmt.Println("Error:", err)
             os.Exit(1)
         }
+    case "version", "--version", "-v":
+        fmt.Println("JarRun version 1.0.0")
     default:
         fmt.Println("Unknown command:", cmd)
         os.Exit(1)
