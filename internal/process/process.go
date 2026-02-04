@@ -43,10 +43,15 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 		return fmt.Errorf("app '%s' already running", appName)
 	}
 
-	// ensure log directory exists
-	logDir := "~/.jarrun/logs"
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return fmt.Errorf("failed to get user home directory: %v", err)
+	}
 
-	err := os.MkdirAll(logDir, 0755)
+	// ensure log directory exists
+	logDir := filepath.Join(home, ".jarrun", "logs")
+
+	err = os.MkdirAll(logDir, 0755)
 	if err != nil {
 		return fmt.Errorf("failed to create log directory: %v", err)
 	}
@@ -83,7 +88,7 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 	app.Status = "running"
 	apps = updateApp(apps, app)
 
-	err = config.SaveConfig("~/.jarrun/config/apps.json", apps)
+	err = config.SaveConfig(filepath.Join(home, ".jarrun", "config", "apps.json"), apps)
 	if err != nil {
 		return fmt.Errorf("failed to save config: %v", err)
 	}
@@ -110,12 +115,17 @@ func StopProcess(appName string, apps []config.AppConfig) error {
 		return fmt.Errorf("app '%s' not found in config", appName)
 	}
 
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return fmt.Errorf("failed to get user home directory: %v", err)
+	}
+	
 	if app.Status != "running" || app.PID == 0 {
 		fmt.Printf("App '%s' is not running\n", appName)
 		app.PID = 0
 		app.Status = "stopped"
 		apps = updateApp(apps, app)
-		_ = config.SaveConfig("~/.jarrun/config/apps.json", apps)
+		_ = config.SaveConfig(filepath.Join(home, ".jarrun", "config", "apps.json"), apps)
 		return nil
 	}
 
@@ -140,7 +150,7 @@ func StopProcess(appName string, apps []config.AppConfig) error {
 	app.PID = 0
 	app.Status = "stopped"
 	apps = updateApp(apps, app)
-	err := config.SaveConfig("~/.jarrun/config/apps.json", apps)
+	err = config.SaveConfig(filepath.Join(home, ".jarrun", "config", "apps.json"), apps)
 	if err != nil {
 		return fmt.Errorf("failed to update config: %v", err)
 	}
@@ -163,7 +173,11 @@ func RestartProcess(appName string, apps []config.AppConfig) error {
 	time.Sleep(1 * time.Second)
 
 	// Reload config to get updated state
-	updatedApps, err := config.LoadConfig("~/.jarrun/config/apps.json")
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return fmt.Errorf("failed to get user home directory: %v", err)
+	}
+	updatedApps, err := config.LoadConfig(filepath.Join(home, ".jarrun", "config", "apps.json"))
 	if err != nil {
 		return fmt.Errorf("failed to reload config: %v", err)
 	}

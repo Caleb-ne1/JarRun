@@ -1,11 +1,12 @@
 package main
 
 import (
-    "fmt"
-    "os"
+	"fmt"
+	"os"
+	"path/filepath"
 
-    "github.com/Caleb-ne1/JarRun/internal/config"
-    "github.com/Caleb-ne1/JarRun/internal/process"
+	"github.com/Caleb-ne1/JarRun/internal/config"
+	"github.com/Caleb-ne1/JarRun/internal/process"
 )
 
 func main() {
@@ -21,11 +22,12 @@ func main() {
         appName = os.Args[2]
     }
 
-    apps, err := config.LoadConfig("configs/apps.json")
+    home, err := os.UserHomeDir()
     if err != nil {
-        fmt.Println("Error loading config:", err)
+        fmt.Println("Error getting user home directory:", err)
         os.Exit(1)
     }
+    apps, err := config.LoadConfig(filepath.Join(home, ".jarrun", "config", "apps.json"))
 
     switch cmd {
     case "start":
@@ -62,7 +64,13 @@ func main() {
             RestartDelay: restart,
         }
 
-        err := config.AddApp("~/.jarrun/config/apps.json", newApp)
+        home, err := os.UserHomeDir()
+        if err != nil {
+            fmt.Println("Error:", err)
+            os.Exit(1)
+        }
+
+        err = config.AddApp(filepath.Join(home, ".jarrun", "config", "apps.json"), newApp)
         if err != nil {
             fmt.Println("Error:", err)
             os.Exit(1)
