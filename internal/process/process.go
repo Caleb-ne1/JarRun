@@ -44,7 +44,7 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 	}
 
 	// ensure log directory exists
-	logDir := "logs"
+	logDir := "~/.jarrun/logs"
 
 	err := os.MkdirAll(logDir, 0755)
 	if err != nil {
@@ -83,7 +83,7 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 	app.Status = "running"
 	apps = updateApp(apps, app)
 
-	err = config.SaveConfig("configs/apps.json", apps)
+	err = config.SaveConfig("~/.jarrun/config/apps.json", apps)
 	if err != nil {
 		return fmt.Errorf("failed to save config: %v", err)
 	}
@@ -115,7 +115,7 @@ func StopProcess(appName string, apps []config.AppConfig) error {
 		app.PID = 0
 		app.Status = "stopped"
 		apps = updateApp(apps, app)
-		_ = config.SaveConfig("configs/apps.json", apps)
+		_ = config.SaveConfig("~/.jarrun/config/apps.json", apps)
 		return nil
 	}
 
@@ -140,7 +140,7 @@ func StopProcess(appName string, apps []config.AppConfig) error {
 	app.PID = 0
 	app.Status = "stopped"
 	apps = updateApp(apps, app)
-	err := config.SaveConfig("configs/apps.json", apps)
+	err := config.SaveConfig("~/.jarrun/config/apps.json", apps)
 	if err != nil {
 		return fmt.Errorf("failed to update config: %v", err)
 	}
@@ -163,7 +163,7 @@ func RestartProcess(appName string, apps []config.AppConfig) error {
 	time.Sleep(1 * time.Second)
 
 	// Reload config to get updated state
-	updatedApps, err := config.LoadConfig("configs/apps.json")
+	updatedApps, err := config.LoadConfig("~/.jarrun/config/apps.json")
 	if err != nil {
 		return fmt.Errorf("failed to reload config: %v", err)
 	}
@@ -230,7 +230,7 @@ func StatusAllApps(apps []config.AppConfig) {
 
 // get logs for app
 func TailLogs(appName string) error {
-	logPath := filepath.Join("logs", appName+".log")
+	logPath := filepath.Join(os.Getenv("HOME"), ".jarrun", "logs", appName+".log")
 
 	// check if file exists
 	if _, err := os.Stat(logPath); os.IsNotExist(err) {

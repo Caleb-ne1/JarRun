@@ -26,8 +26,8 @@ readonly QUESTION="❓"
 
 # Paths
 readonly BIN_PATH="/usr/local/bin/jarrun"
-readonly LOG_DIR="$HOME/logs"
-readonly CONFIG_DIR="$HOME/.jarrun"
+readonly LOG_DIR="$HOME/.jarrun/logs"
+readonly CONFIG_DIR="$HOME/.jarrun/config"
 
 
 # functions

@@ -62,7 +62,7 @@ func main() {
             RestartDelay: restart,
         }
 
-        err := config.AddApp("configs/apps.json", newApp)
+        err := config.AddApp("~/.jarrun/config/apps.json", newApp)
         if err != nil {
             fmt.Println("Error:", err)
             os.Exit(1)
