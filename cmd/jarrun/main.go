@@ -77,7 +77,12 @@ func main() {
             os.Exit(1)
         }
         fmt.Println("App stopped successfully.")
-        
+    case "restart":
+        err := process.RestartProcess(appName, apps)
+        if err != nil {
+            fmt.Println("Error:", err)
+            os.Exit(1)
+        }
     case "status":
         if len(os.Args) == 2 {
             process.StatusAllApps(apps)
