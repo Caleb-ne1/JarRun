@@ -21,7 +21,7 @@ JarRun is a simple CLI tool to start, stop, restart and monitor Java (or any) ap
 ### Install via prebuilt binary (recommended)
 
 ```bash
-curl -sSL https://github.com/Caleb-ne1/JarRun/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/Caleb-ne1/JarRun/main/install.sh | bash
 ```
 
 This will:
@@ -102,7 +102,7 @@ jarrun status
 To remove JarRun:
 
 ```bash
-curl -sSL https://github.com/Caleb-ne1/JarRun/unistall.sh | bash
+curl -sSL https://raw.githubusercontent.com/Caleb-ne1/JarRun/main/uninstall.sh | bash
 ```
 
 ---
