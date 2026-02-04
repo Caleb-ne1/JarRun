@@ -52,7 +52,7 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 
 	logPath := filepath.Join(logDir, fmt.Sprintf("%s.log", app.Name))
 
-	logFile, err := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644);
+	logFile, err := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 
 	if err != nil {
 		return fmt.Errorf("failed to open log file: %v", err)
@@ -66,7 +66,7 @@ func StartProcess(appName string, apps []config.AppConfig) error {
 	cmd.Stdout = logFile
 	cmd.Stderr = logFile
 
-	// Detach from terminal 
+	// Detach from terminal
 	cmd.SysProcAttr = &syscall.SysProcAttr{
 		Setsid: true,
 	}
@@ -123,16 +123,21 @@ func StopProcess(appName string, apps []config.AppConfig) error {
 
 	// try killing by PID first
 	if app.PID != 0 {
-		process, err := os.FindProcess(app.PID)
-		if err == nil {
-			_ = process.Signal(syscall.SIGTERM)
-			time.Sleep(500 * time.Millisecond)
-			_ = process.Kill()
+
+		// try graceful shutdown
+		err := syscall.Kill(-app.PID, syscall.SIGTERM)
+		if err != nil {
+			fmt.Println("Failed to send SIGTERM:", err)
+		}
+
+		time.Sleep(1 * time.Second)
+
+		// force kill if still alive
+		err = syscall.Kill(-app.PID, syscall.SIGKILL)
+		if err != nil {
+			fmt.Println("Failed to send SIGKILL:", err)
 		}
 	}
-
-	// fallback: kill by command line if still running
-	_ = exec.Command("pkill", "-f", app.Command).Run()
 
 	// update status and PID in config
 	app.PID = 0
@@ -195,7 +200,6 @@ func StatusAllApps(apps []config.AppConfig) {
 	}
 	fmt.Println()
 }
-
 
 // get logs for app
 func TailLogs(appName string) error {

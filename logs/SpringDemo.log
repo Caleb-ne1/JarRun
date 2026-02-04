@@ -19,3 +19,26 @@
 2026-02-04T09:29:37.466+03:00  INFO 26189 --- [demo] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-02-04T09:29:37.466+03:00  INFO 26189 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-02-04T09:29:37.468+03:00  INFO 26189 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-02-04T09:54:51.450+03:00  INFO 26189 --- [demo] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-04T09:54:51.508+03:00  INFO 26189 --- [demo] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.2)
+
+2026-02-04T09:57:21.607+03:00  INFO 49048 --- [demo] [           main] com.example.demo.DemoAppMain             : Starting DemoAppMain v0.0.1-SNAPSHOT using Java 24.0.2 with PID 49048 (/home/caleb-kibet/vscode/go-tools/JarRun/demo-0.0.1-SNAPSHOT.jar started by caleb-kibet in /home/caleb-kibet/vscode/go-tools/JarRun)
+2026-02-04T09:57:21.612+03:00  INFO 49048 --- [demo] [           main] com.example.demo.DemoAppMain             : No active profile set, falling back to 1 default profile: "default"
+2026-02-04T09:57:22.701+03:00  INFO 49048 --- [demo] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-02-04T09:57:22.717+03:00  INFO 49048 --- [demo] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-04T09:57:22.717+03:00  INFO 49048 --- [demo] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-04T09:57:22.740+03:00  INFO 49048 --- [demo] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1039 ms
+2026-02-04T09:57:23.162+03:00  INFO 49048 --- [demo] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-02-04T09:57:23.202+03:00  INFO 49048 --- [demo] [           main] com.example.demo.DemoAppMain             : Started DemoAppMain in 2.306 seconds (process running for 3.414)
+2026-02-04T09:57:39.991+03:00  INFO 49048 --- [demo] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-04T09:57:39.991+03:00  INFO 49048 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-04T09:57:39.992+03:00  INFO 49048 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
