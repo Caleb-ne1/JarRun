@@ -2,8 +2,9 @@ package config
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"os"
+	"path/filepath"
 )
 
 type AppConfig struct {
@@ -34,23 +35,41 @@ func SaveConfig(path string, apps []AppConfig) error {
 
 // loadConfig loads apps from a JSON file
 func LoadConfig(path string) ([]AppConfig, error) {
-    data, err := os.ReadFile(path)
-    if err != nil {
-        return nil, err
-    }
+	dir := filepath.Dir(path)
 
-    var cfg Config
-    err = json.Unmarshal(data, &cfg)
-    if err != nil {
-        return nil, err
-    }
+	// create configs dir if missing
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return nil, fmt.Errorf("failed to create config directory: %v", err)
+		}
+	}
 
-    if len(cfg.Apps) == 0 {
-        return nil, errors.New("no apps defined in config")
-    }
+	// create empty apps.json if missing
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		empty := Config{Apps: []AppConfig{}}
+		data, _ := json.MarshalIndent(empty, "", "  ")
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			return nil, fmt.Errorf("failed to create config file: %v", err)
+		}
+	}
 
-    return cfg.Apps, nil
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read config: %v", err)
+	}
+
+	if len(data) == 0 {
+		return []AppConfig{}, nil
+	}
+
+	var cfg Config
+	if err := json.Unmarshal(data, &cfg); err != nil {
+		return nil, fmt.Errorf("failed to parse config: %v", err)
+	}
+
+	return cfg.Apps, nil
 }
+
 
 // addApp adds a new app to the config file
 func AddApp(path string, newApp AppConfig) error {
@@ -59,15 +78,14 @@ func AddApp(path string, newApp AppConfig) error {
         return err
     }
 
-    // check duplicate name
-    for _, app := range apps {
-        if app.Name == newApp.Name {
-            return errors.New("app with this name already exists")
+    // prevent duplicate names
+    for _, a := range apps {
+        if a.Name == newApp.Name {
+            return fmt.Errorf("app '%s' already exists", newApp.Name)
         }
     }
 
     apps = append(apps, newApp)
-
     return SaveConfig(path, apps)
 }
 

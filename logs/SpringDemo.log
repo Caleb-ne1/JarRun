@@ -122,3 +122,5 @@
 2026-02-04T10:12:37.598+03:00  INFO 61176 --- [demo] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 958 ms
 2026-02-04T10:12:37.994+03:00  INFO 61176 --- [demo] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
 2026-02-04T10:12:38.008+03:00  INFO 61176 --- [demo] [           main] com.example.demo.DemoAppMain             : Started DemoAppMain in 1.967 seconds (process running for 2.614)
+2026-02-04T10:21:28.784+03:00  INFO 61176 --- [demo] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-04T10:21:28.789+03:00  INFO 61176 --- [demo] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
