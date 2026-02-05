@@ -9,6 +9,7 @@ JarRun is a simple CLI tool to start, stop, restart and monitor Java (or any) ap
 * Start apps in the background
 * Stop apps safely
 * Restart apps
+* Remove app
 * Tail live logs
 * Track process status
 * Config stored in `configs/apps.json`
@@ -47,6 +48,12 @@ sudo mv jarrun /usr/local/bin/
 
 ## Usage
 
+### help message
+
+```bash
+jarrun help/--help/-h
+```
+
 ### Add an app
 
 ```bash
@@ -75,6 +82,11 @@ jarrun stop <AppName>
 
 ```bash
 jarrun restart <AppName>
+```
+### Remove app from config
+
+```bash
+jarrun remove <AppName>
 ```
 
 ### Tail logs

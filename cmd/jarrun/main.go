@@ -116,6 +116,30 @@ func main() {
         }
     case "version", "--version", "-v":
         fmt.Println("JarRun version 1.0.0")
+    case "remove":
+        if appName == "" {
+            fmt.Println("Usage: jarrun remove <appname>")
+            os.Exit(1)
+        }
+        err := process.RemoveApp(appName, apps)
+        if err != nil {
+            fmt.Println("Error:", err)
+            os.Exit(1)
+        }
+    case "help", "--help", "-h":
+        fmt.Println("Usage: jarrun <command> [appname]")
+        fmt.Println("Commands:")
+        fmt.Println("  add <name> \"<command>\" --cwd=<path> --restart=<seconds>  Add a new app")
+        fmt.Println("  start <appname>           Start the specified app")
+        fmt.Println("  stop <appname>            Stop the specified app")
+        fmt.Println("  restart <appname>         Restart the specified app")
+        fmt.Println("  status                     show status of all app")
+        fmt.Println("  status [appname]          Show status of a specific app")
+        fmt.Println("  logs <appname>            Tail logs of the specified app")
+        fmt.Println("  remove <appname>          Remove the specified app from config")
+        fmt.Println("  version                   Show version information")
+        fmt.Println("  help                      Show this help message")
+        fmt.Println()
     default:
         fmt.Println("Unknown command:", cmd)
         os.Exit(1)

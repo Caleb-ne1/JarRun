@@ -257,3 +257,50 @@ func TailLogs(appName string) error {
 
 	return cmd.Run()
 }
+
+// remove app from config
+func RemoveApp(appName string, apps []config.AppConfig) error {
+	// find app
+	var app config.AppConfig
+	found := false
+	for _, a := range apps {
+		if a.Name == appName {
+			app = a
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		return fmt.Errorf("app '%s' not found in config", appName)
+	}
+
+	// stop if running
+	if app.Status == "running" {
+		err := StopProcess(appName, apps)
+		if err != nil {
+			return fmt.Errorf("failed to stop app before removal: %v", err)
+		}
+	}
+
+	// remove from slice
+	newApps := []config.AppConfig{}
+	for _, a := range apps {
+		if a.Name != appName {
+			newApps = append(newApps, a)
+		}
+	}
+
+	// save updated config
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return fmt.Errorf("failed to get user home directory: %v", err)
+	}
+	err = config.SaveConfig(filepath.Join(home, ".jarrun", "config", "apps.json"), newApps)
+	if err != nil {
+		return fmt.Errorf("failed to save updated config: %v", err)
+	}
+
+	fmt.Printf("App '%s' removed successfully\n", appName)
+	return nil
+}
